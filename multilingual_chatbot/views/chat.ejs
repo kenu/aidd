@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat - Multilingual Chatbot</title>
+    <style>
+        #chat-window {
+            height: 400px;
+            overflow-y: scroll;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        .message {
+            margin-bottom: 10px;
+        }
+        .user-message {
+            text-align: right;
+            color: blue;
+        }
+        .bot-message {
+            text-align: left;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome, <%= user.name %>!</h1>
+    <div id="chat-window">
+        <% messages.forEach(function(message) { %>
+            <div class="message <%= message.isUser ? 'user-message' : 'bot-message' %>">
+                <%= message.content %>
+            </div>
+        <% }); %>
+    </div>
+    <form action="/send-message" method="post">
+        <input type="text" name="message" placeholder="Type your message..." required>
+        <select name="language">
+            <option value="en">English</option>
+            <option value="ko">한국어</option>
+            <option value="zh">中文</option>
+        </select>
+        <button type="submit">Send</button>
+    </form>
+    <a href="/logout">Logout</a>
+
+    <script>
+        // Scroll to the bottom of the chat window
+        var chatWindow = document.getElementById('chat-window');
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+    </script>
+</body>
+</html>
